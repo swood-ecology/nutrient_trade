@@ -1,0 +1,545 @@
+# -------------------------------------------
+# Country ranking of nutritional potential
+# Plotting
+# Stephen Wood
+# -------------------------------------------
+
+## Load needed libraries
+library(ggplot2)    # For plotting
+library(reshape2)   # For transforming data frame from long to wide
+
+## Read in data
+data <- read.csv("/Volumes/My Passport for Mac/Data/Nutrition/Food Balance Sheets/FoodBalanceSheets_FORMAT_7_ALT_20002011AVG_ALL_ELEMENTS_RNIperCapita.csv",header=T)
+
+## Define plotting theme
+plot_theme <- theme(
+  panel.grid=element_blank(),
+  axis.title.x = element_blank(),
+  axis.text.x = element_text(color="black",angle=90,vjust=0.5,hjust=1),
+  legend.position = "none",
+  plot.title = element_text(hjust=0.5,face="bold"),
+  plot.subtitle = element_text(hjust=0.5,face="italic",vjust=1),
+  panel.background=element_blank()
+)
+
+colors <- c("#a50026","#006837")
+names(colors) <- c("TRUE","FALSE")
+  
+## Cast data wide
+data.wide <- melt(data[,-1],id.vars=c("Country","Element"))
+data.wide <- dcast(data.wide,Country~Element+variable)
+
+
+## Protein
+data.food.protein <- data.wide[,c(1,20)]
+# Lowest 20
+data.food.protein.low <- data.food.protein[order(data.food.protein$Food_protein),][1:20,]
+# Highest 20
+data.food.protein.high <- data.food.protein[order(data.food.protein$Food_protein,decreasing=T),][1:20,]
+# Plots
+low.food.protein <- ggplot(data=data.food.protein.low,aes(x=reorder(Country,-Food_protein),y=Food_protein)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_protein < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.protein$Food_protein,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.protein$Food_protein,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Protein",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.protein <- ggplot(data=data.food.protein.high,aes(x=reorder(Country,-Food_protein),y=Food_protein)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_protein < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.protein$Food_protein,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.protein$Food_protein,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Protein",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Energy
+data.food.energy <- data.wide[,c(1,21)]
+# Lowest 20
+data.food.energy.low <- data.food.energy[order(data.food.energy$Food_energy),][1:20,]
+# Highest 20
+data.food.energy.high <- data.food.energy[order(data.food.energy$Food_energy,decreasing=T),][1:20,]
+# Plots
+low.food.energy <- ggplot(data=data.food.energy.low,aes(x=reorder(Country,-Food_energy),y=Food_energy)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_energy < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.energy$Food_energy,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.energy$Food_energy,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Energy",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.energy <- ggplot(data=data.food.energy.high,aes(x=reorder(Country,-Food_energy),y=Food_energy)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_energy < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.energy$Food_energy,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.energy$Food_energy,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Energy",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Zinc
+data.food.zinc <- data.wide[,c(1,22)]
+# Lowest 20
+data.food.zinc.low <- data.food.zinc[order(data.food.zinc$Food_zinc),][1:20,]
+# Highest 20
+data.food.zinc.high <- data.food.zinc[order(data.food.zinc$Food_zinc,decreasing=T),][1:20,]
+# Plots
+low.food.zinc <- ggplot(data=data.food.zinc.low,aes(x=reorder(Country,-Food_zinc),y=Food_zinc)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_zinc < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.zinc$Food_zinc,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.zinc$Food_zinc,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Zinc",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.zinc <- ggplot(data=data.food.zinc.high,aes(x=reorder(Country,-Food_zinc),y=Food_zinc)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_zinc < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.zinc$Food_zinc,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.zinc$Food_zinc,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Zinc",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Calcium
+data.food.calcium <- data.wide[,c(1,23)]
+# Lowest 20
+data.food.calcium.low <- data.food.calcium[order(data.food.calcium$Food_calcium),][1:20,]
+# Highest 20
+data.food.calcium.high <- data.food.calcium[order(data.food.calcium$Food_calcium,decreasing=T),][1:20,]
+# Plots
+low.food.calcium <- ggplot(data=data.food.calcium.low,aes(x=reorder(Country,-Food_calcium),y=Food_calcium)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_calcium < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.calcium$Food_calcium,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.calcium$Food_calcium,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Calcium",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.calcium <- ggplot(data=data.food.calcium.high,aes(x=reorder(Country,-Food_calcium),y=Food_calcium)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_calcium < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.calcium$Food_calcium,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.calcium$Food_calcium,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Calcium",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Iron
+data.food.iron <- data.wide[,c(1,24)]
+# Lowest 20
+data.food.iron.low <- data.food.iron[order(data.food.iron$Iron_notrade),][1:20,]
+# Highest 20
+data.food.iron.high <- data.food.iron[order(data.food.iron$Iron_notrade,decreasing=T),][1:20,]
+# Plots
+low.food.iron <- ggplot(data=data.food.iron.low,aes(x=reorder(Country,-Iron_notrade),y=Iron_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Iron_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.iron$Iron_notrade,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.iron$Iron_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Iron",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.iron <- ggplot(data=data.food.iron.high,aes(x=reorder(Country,-Iron_notrade),y=Iron_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Iron_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.iron$Iron_notrade,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.iron$Iron_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Iron",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Vitamin B12
+data.food.vitb12 <- data.wide[,c(1,25)]
+# Lowest 20
+data.food.vitb12.low <- data.food.vitb12[order(data.food.vitb12$Food_VitB12),][1:20,]
+# Highest 20
+data.food.vitb12.high <- data.food.vitb12[order(data.food.vitb12$Food_VitB12,decreasing=T),][1:20,]
+# Plots
+low.food.vitb12 <- ggplot(data=data.food.vitb12.low,aes(x=reorder(Country,-Food_VitB12),y=Food_VitB12)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_VitB12 < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.vitb12$Food_VitB12,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.vitb12$Food_VitB12,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin B12",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.vitb12 <- ggplot(data=data.food.vitb12.high,aes(x=reorder(Country,-Food_VitB12),y=Food_VitB12)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_VitB12 < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.vitb12$Food_VitB12,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.vitb12$Food_VitB12,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin B12",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Folate
+data.food.folate <- data.wide[,c(1,26)]
+# Lowest 20
+data.food.folate.low <- data.food.folate[order(data.food.folate$Folate_notrade),][1:20,]
+# Highest 20
+data.food.folate.high <- data.food.folate[order(data.food.folate$Folate_notrade,decreasing=T),][1:20,]
+# Plots
+low.food.folate <- ggplot(data=data.food.folate.low,aes(x=reorder(Country,-Folate_notrade),y=Folate_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Folate_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.folate$Folate_notrade,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.folate$Folate_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Folate",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.folate <- ggplot(data=data.food.folate.high,aes(x=reorder(Country,-Folate_notrade),y=Folate_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Folate_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.folate$Folate_notrade,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.folate$Folate_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Folate",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Vitamin A
+data.food.vita <- data.wide[,c(1,27)]
+
+# Lowest 20
+data.food.vita.low <- data.food.vita[order(data.food.vita$Food_VitA),][1:20,]
+# Highest 20
+data.food.vita.high <- data.food.vita[order(data.food.vita$Food_VitA,decreasing=T),][1:20,]
+# Plots
+low.food.vita <- ggplot(data=data.food.vita.low,aes(x=reorder(Country,-Food_VitA),y=Food_VitA)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_VitA < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.vita$Food_VitA,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.food.vita$Food_VitA,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin A",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.food.vita <- ggplot(data=data.food.vita.high,aes(x=reorder(Country,-Food_VitA),y=Food_VitA)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Food_VitA < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.food.vita$Food_VitA,na.rm=T)),linetype=2) +
+  ggtitle("Vitamin A\nLowest 20") +
+  ylim(c(0,max(data.food.vita$Food_VitA,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin A",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Write figures to .pdf files to be merged into single figure in Illustrator
+plotlist = list()
+plotlist[[1]] <- high.food.energy
+plotlist[[2]] <- high.food.protein
+plotlist[[3]] <- high.food.calcium
+plotlist[[4]] <- high.food.folate
+plotlist[[5]] <- high.food.iron
+plotlist[[6]] <- high.food.zinc
+plotlist[[7]] <- high.food.vita
+plotlist[[8]] <- high.food.vitb12
+plotlist[[9]] <- low.food.energy
+plotlist[[10]] <- low.food.protein
+plotlist[[11]] <- low.food.calcium
+plotlist[[12]] <- low.food.folate
+plotlist[[13]] <- low.food.iron
+plotlist[[14]] <- low.food.zinc
+plotlist[[15]] <- low.food.vita
+plotlist[[16]] <- low.food.vitb12
+
+setwd("~/Documents/Work/Projects/Manuscripts/Unsubmitted/Nutrient Trade/Figures/Nutrients By Country")
+for(i in 1:16){
+  ggsave(plot=plotlist[[i]],file=paste("no.trade.file",i,".pdf",sep=""))
+}
+
+
+
+## Country rank plotting, with no trade
+
+## Define no trade variables
+data.wide$Protein_notrade <- data.wide$Food_protein - (data.wide$`Import Quantity_protein`-data.wide$ExportQuantity_protein)
+data.wide$Energy_notrade <- data.wide$Food_energy - (data.wide$`Import Quantity_energy`-data.wide$ExportQuantity_energy)
+data.wide$Zinc_notrade <- data.wide$Food_zinc - (data.wide$`Import Quantity_zinc`-data.wide$ExportQuantity_zinc)
+data.wide$Iron_notrade <- data.wide$Food_iron - (data.wide$`Import Quantity_iron`-data.wide$ExportQuantity_iron)
+data.wide$Calcium_notrade <- data.wide$Food_calcium - (data.wide$`Import Quantity_calcium`-data.wide$ExportQuantity_calcium)
+data.wide$Folate_notrade <- data.wide$Food_folate - (data.wide$`Import Quantity_folate`-data.wide$ExportQuantity_folate)
+data.wide$VitB12_notrade <- data.wide$Food_VitB12 - (data.wide$`Import Quantity_VitB12`-data.wide$ExportQuantity_VitB12)
+data.wide$VitA_notrade <- data.wide$Food_VitA - (data.wide$`Import Quantity_VitA`-data.wide$ExportQuantity_VitA)
+
+
+## Protein
+data.nt.protein <- data.wide[,c(1,92)]
+# Lowest 20
+data.nt.protein.low <- data.nt.protein[order(data.nt.protein$Protein_notrade),][1:20,]
+# Highest 20
+data.nt.protein.high <- data.nt.protein[order(data.nt.protein$Protein_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.protein <- ggplot(data=data.nt.protein.low,aes(x=reorder(Country,-Protein_notrade),y=Protein_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Protein_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.protein$Protein_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.protein$Protein_notrade,na.rm=T),max(data.nt.protein$Protein_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Protein, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.protein <- ggplot(data=data.nt.protein.high,aes(x=reorder(Country,-Protein_notrade),y=Protein_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Protein_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.protein$Protein_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.protein$Protein_notrade,na.rm=T),max(data.nt.protein$Protein_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Protein, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Energy
+data.nt.energy <- data.wide[,c(1,93)]
+# Lowest 20
+data.nt.energy.low <- data.nt.energy[order(data.nt.energy$Energy_notrade),][1:20,]
+# Highest 20
+data.nt.energy.high <- data.nt.energy[order(data.nt.energy$Energy_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.energy <- ggplot(data=data.nt.energy.low,aes(x=reorder(Country,-Energy_notrade),y=Energy_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Energy_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.energy$Energy_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.energy$Energy_notrade,na.rm=T),max(data.nt.energy$Energy_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Energy, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.energy <- ggplot(data=data.nt.energy.high,aes(x=reorder(Country,-Energy_notrade),y=Energy_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Energy_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.energy$Energy_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.energy$Energy_notrade,na.rm=T),max(data.nt.energy$Energy_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Energy, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Zinc
+data.nt.zinc <- data.wide[,c(1,94)]
+# Lowest 20
+data.nt.zinc.low <- data.nt.zinc[order(data.nt.zinc$Zinc_notrade),][1:20,]
+# Highest 20
+data.nt.zinc.high <- data.nt.zinc[order(data.nt.zinc$Zinc_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.zinc <- ggplot(data=data.nt.zinc.low,aes(x=reorder(Country,-Zinc_notrade),y=Zinc_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Zinc_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.zinc$Zinc_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.zinc$Zinc_notrade,na.rm=T),max(data.nt.zinc$Zinc_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Zinc, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.zinc <- ggplot(data=data.nt.zinc.high,aes(x=reorder(Country,-Zinc_notrade),y=Zinc_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Zinc_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.zinc$Zinc_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.zinc$Zinc_notrade,na.rm=T),max(data.nt.zinc$Zinc_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Zinc, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Calcium
+data.nt.calcium <- data.wide[,c(1,96)]
+# Lowest 20
+data.nt.calcium.low <- data.nt.calcium[order(data.nt.calcium$Calcium_notrade),][1:20,]
+# Highest 20
+data.nt.calcium.high <- data.nt.calcium[order(data.nt.calcium$Calcium_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.calcium <- ggplot(data=data.nt.calcium.low,aes(x=reorder(Country,-Calcium_notrade),y=Calcium_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Calcium_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.calcium$Calcium_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.calcium$Calcium_notrade,na.rm=T),max(data.nt.calcium$Calcium_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Calcium, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.calcium <- ggplot(data=data.nt.calcium.high,aes(x=reorder(Country,-Calcium_notrade),y=Calcium_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Calcium_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.calcium$Calcium_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.calcium$Calcium_notrade,na.rm=T),max(data.nt.calcium$Calcium_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Calcium, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Iron
+data.nt.iron <- data.wide[,c(1,95)]
+# Lowest 20
+data.nt.iron.low <- data.nt.iron[order(data.nt.iron$Iron_notrade),][1:20,]
+# Highest 20
+data.nt.iron.high <- data.nt.iron[order(data.nt.iron$Iron_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.iron <- ggplot(data=data.nt.iron.low,aes(x=reorder(Country,-Iron_notrade),y=Iron_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Iron_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.iron$Iron_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.iron$Iron_notrade,na.rm=T),max(data.nt.iron$Iron_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Iron, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.iron <- ggplot(data=data.nt.iron.high,aes(x=reorder(Country,-Iron_notrade),y=Iron_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Iron_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.iron$Iron_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.iron$Iron_notrade,na.rm=T),max(data.nt.iron$Iron_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Iron, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Vitamin B12
+data.nt.vitb12 <- data.wide[,c(1,98)]
+# Lowest 20
+data.nt.vitb12.low <- data.nt.vitb12[order(data.nt.vitb12$VitB12_notrade),][1:20,]
+# Highest 20
+data.nt.vitb12.high <- data.nt.vitb12[order(data.nt.vitb12$VitB12_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.vitb12 <- ggplot(data=data.nt.vitb12.low,aes(x=reorder(Country,-VitB12_notrade),y=VitB12_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=VitB12_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.vitb12$VitB12_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.vitb12$VitB12_notrade,na.rm=T),max(data.nt.vitb12$VitB12_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin B12, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.vitb12 <- ggplot(data=data.nt.vitb12.high,aes(x=reorder(Country,-VitB12_notrade),y=VitB12_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=VitB12_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.vitb12$VitB12_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.vitb12$VitB12_notrade,na.rm=T),max(data.nt.vitb12$VitB12_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin B12, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Folate
+data.nt.folate <- data.wide[,c(1,97)]
+# Lowest 20
+data.nt.folate.low <- data.nt.folate[order(data.nt.folate$Folate_notrade),][1:20,]
+# Highest 20
+data.nt.folate.high <- data.nt.folate[order(data.nt.folate$Folate_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.folate <- ggplot(data=data.nt.folate.low,aes(x=reorder(Country,-Folate_notrade),y=Folate_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Folate_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.folate$Folate_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.folate$Folate_notrade,na.rm=T),max(data.nt.folate$Folate_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Folate, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.folate <- ggplot(data=data.nt.folate.high,aes(x=reorder(Country,-Folate_notrade),y=Folate_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=Folate_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.folate$Folate_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.folate$Folate_notrade,na.rm=T),max(data.nt.folate$Folate_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Folate, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Vitamin A
+data.nt.vita <- data.wide[,c(1,99)]
+
+# Lowest 20
+data.nt.vita.low <- data.nt.vita[order(data.nt.vita$VitA_notrade),][1:20,]
+# Highest 20
+data.nt.vita.high <- data.nt.vita[order(data.nt.vita$VitA_notrade,decreasing=T),][1:20,]
+# Plots
+low.nt.vita <- ggplot(data=data.nt.vita.low,aes(x=reorder(Country,-VitA_notrade),y=VitA_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=VitA_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.vita$VitA_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.vita$VitA_notrade,na.rm=T),max(data.nt.vita$VitA_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin A, no trade",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.nt.vita <- ggplot(data=data.nt.vita.high,aes(x=reorder(Country,-VitA_notrade),y=VitA_notrade)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=VitA_notrade < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.nt.vita$VitA_notrade,na.rm=T)),linetype=2) +
+  ylim(c(min(data.nt.vita$VitA_notrade,na.rm=T),max(data.nt.vita$VitA_notrade,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements in food supply\n",
+       title="Vitamin A, no trade",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Write figures to .pdf files to be merged into single figure in Illustrator
+plotlist = list()
+plotlist[[1]] <- high.nt.energy
+plotlist[[2]] <- high.nt.protein
+plotlist[[3]] <- high.nt.calcium
+plotlist[[4]] <- high.nt.folate
+plotlist[[5]] <- high.nt.iron
+plotlist[[6]] <- high.nt.zinc
+plotlist[[7]] <- high.nt.vita
+plotlist[[8]] <- high.nt.vitb12
+plotlist[[9]] <- low.nt.energy
+plotlist[[10]] <- low.nt.protein
+plotlist[[11]] <- low.nt.calcium
+plotlist[[12]] <- low.nt.folate
+plotlist[[13]] <- low.nt.iron
+plotlist[[14]] <- low.nt.zinc
+plotlist[[15]] <- low.nt.vita
+plotlist[[16]] <- low.nt.vitb12
+
+setwd("~/Documents/Work/Projects/Manuscripts/Unsubmitted/Nutrient Trade/Figures/Nutrients By Country")
+for(i in 1:16){
+  ggsave(plot=plotlist[[i]],file=paste("no.trade.file",i,".pdf",sep=""))
+}
