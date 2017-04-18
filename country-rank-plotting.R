@@ -803,3 +803,261 @@ setwd("~/Documents/Work/Projects/Manuscripts/Unsubmitted/Nutrient Trade/Figures/
 for(i in 1:16){
   ggsave(plot=plotlist[[i]],file=paste("import.file",i,".pdf",sep=""))
 }
+
+
+## Country rank plotting, export
+
+## Protein
+data.export.protein <- data.wide[,c(1,2)]
+# Lowest 20
+data.export.protein.low <- data.export.protein[order(data.export.protein$ExportQuantity_protein),][1:20,]
+# Highest 20
+data.export.protein.high <- data.export.protein[order(data.export.protein$ExportQuantity_protein,decreasing=T),][1:20,]
+# Plots
+low.export.protein <- ggplot(data=data.export.protein.low,aes(x=reorder(Country,-ExportQuantity_protein),y=ExportQuantity_protein)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_protein < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.protein$ExportQuantity_protein,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.protein$ExportQuantity_protein,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Protein",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.protein <- ggplot(data=data.export.protein.high,aes(x=reorder(Country,-ExportQuantity_protein),y=ExportQuantity_protein)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_protein < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.protein$ExportQuantity_protein,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.protein$ExportQuantity_protein,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Protein",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+## Energy
+data.export.energy <- data.wide[,c(1,30)]
+names(data.export.energy)[2] <- 'ExportQuantity_energy'
+# Lowest 20
+data.export.energy.low <- data.export.energy[order(data.export.energy$ExportQuantity_energy),][1:20,]
+# Highest 20
+data.export.energy.high <- data.export.energy[order(data.export.energy$ExportQuantity_energy,decreasing=T),][1:20,]
+# Plots
+low.export.energy <- ggplot(data=data.export.energy.low,aes(x=reorder(Country,-ExportQuantity_energy),y=ExportQuantity_energy)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_energy < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.energy$ExportQuantity_energy,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.energy$ExportQuantity_energy,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Energy",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.energy <- ggplot(data=data.export.energy.high,aes(x=reorder(Country,-ExportQuantity_energy),y=ExportQuantity_energy)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_energy < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.energy$ExportQuantity_energy,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.energy$ExportQuantity_energy,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Energy",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Zinc
+data.export.zinc <- data.wide[,c(1,31)]
+names(data.export.zinc)[2] <- 'ExportQuantity_zinc'
+# Lowest 20
+data.export.zinc.low <- data.export.zinc[order(data.export.zinc$ExportQuantity_zinc),][1:20,]
+# Highest 20
+data.export.zinc.high <- data.export.zinc[order(data.export.zinc$ExportQuantity_zinc,decreasing=T),][1:20,]
+# Plots
+low.export.zinc <- ggplot(data=data.export.zinc.low,aes(x=reorder(Country,-ExportQuantity_zinc),y=ExportQuantity_zinc)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_zinc < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.zinc$ExportQuantity_zinc,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.zinc$ExportQuantity_zinc,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Zinc",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.zinc <- ggplot(data=data.export.zinc.high,aes(x=reorder(Country,-ExportQuantity_zinc),y=ExportQuantity_zinc)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_zinc < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.zinc$ExportQuantity_zinc,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.zinc$ExportQuantity_zinc,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Zinc",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Calcium
+data.export.calcium <- data.wide[,c(1,32)]
+names(data.export.calcium)[2] <- 'ExportQuantity_calcium'
+# Lowest 20
+data.export.calcium.low <- data.export.calcium[order(data.export.calcium$ExportQuantity_calcium),][1:20,]
+# Highest 20
+data.export.calcium.high <- data.export.calcium[order(data.export.calcium$ExportQuantity_calcium,decreasing=T),][1:20,]
+# Plots
+low.export.calcium <- ggplot(data=data.export.calcium.low,aes(x=reorder(Country,-ExportQuantity_calcium),y=ExportQuantity_calcium)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_calcium < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.calcium$ExportQuantity_calcium,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.calcium$ExportQuantity_calcium,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Calcium",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.calcium <- ggplot(data=data.export.calcium.high,aes(x=reorder(Country,-ExportQuantity_calcium),y=ExportQuantity_calcium)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_calcium < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.calcium$ExportQuantity_calcium,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.calcium$ExportQuantity_calcium,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Calcium",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Iron
+data.export.iron <- data.wide[,c(1,33)]
+names(data.export.iron)[2] <- 'ExportQuantity_iron'
+# Lowest 20
+data.export.iron.low <- data.export.iron[order(data.export.iron$ExportQuantity_iron),][1:20,]
+# Highest 20
+data.export.iron.high <- data.export.iron[order(data.export.iron$ExportQuantity_iron,decreasing=T),][1:20,]
+# Plots
+low.export.iron <- ggplot(data=data.export.iron.low,aes(x=reorder(Country,-ExportQuantity_iron),y=ExportQuantity_iron)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_iron < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.iron$ExportQuantity_iron,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.iron$ExportQuantity_iron,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Iron",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.iron <- ggplot(data=data.export.iron.high,aes(x=reorder(Country,-ExportQuantity_iron),y=ExportQuantity_iron)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_iron < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.iron$ExportQuantity_iron,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.iron$ExportQuantity_iron,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Iron",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Vitamin B12
+data.export.vitb12 <- data.wide[,c(1,34)]
+names(data.export.vitb12)[2] <- 'ExportQuantity_VitB12'
+# Lowest 20
+data.export.vitb12.low <- data.export.vitb12[order(data.export.vitb12$ExportQuantity_VitB12),][1:20,]
+# Highest 20
+data.export.vitb12.high <- data.export.vitb12[order(data.export.vitb12$ExportQuantity_VitB12,decreasing=T),][1:20,]
+# Plots
+low.export.vitb12 <- ggplot(data=data.export.vitb12.low,aes(x=reorder(Country,-ExportQuantity_VitB12),y=ExportQuantity_VitB12)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitB12 < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.vitb12$ExportQuantity_VitB12,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.vitb12$ExportQuantity_VitB12,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Vitamin B12",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.vitb12 <- ggplot(data=data.export.vitb12.high,aes(x=reorder(Country,-ExportQuantity_VitB12),y=ExportQuantity_VitB12)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitB12 < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.vitb12$ExportQuantity_VitB12,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.vitb12$ExportQuantity_VitB12,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Vitamin B12",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Folate
+data.export.folate <- data.wide[,c(1,35)]
+names(data.export.folate)[2] <- 'ExportQuantity_folate'
+# Lowest 20
+data.export.folate.low <- data.export.folate[order(data.export.folate$ExportQuantity_folate),][1:20,]
+# Highest 20
+data.export.folate.high <- data.export.folate[order(data.export.folate$ExportQuantity_folate,decreasing=T),][1:20,]
+# Plots
+low.export.folate <- ggplot(data=data.export.folate.low,aes(x=reorder(Country,-ExportQuantity_folate),y=ExportQuantity_folate)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_folate < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.folate$ExportQuantity_folate,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.folate$ExportQuantity_folate,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Folate",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.folate <- ggplot(data=data.export.folate.high,aes(x=reorder(Country,-ExportQuantity_folate),y=ExportQuantity_folate)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_folate < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.folate$ExportQuantity_folate,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.folate$ExportQuantity_folate,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Folate",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Vitamin A
+data.export.vita <- data.wide[,c(1,36)]
+names(data.export.vita)[2] <- 'ExportQuantity_VitA'
+# Lowest 20
+data.export.vita.low <- data.export.vita[order(data.export.vita$ExportQuantity_VitA),][1:20,]
+# Highest 20
+data.export.vita.high <- data.export.vita[order(data.export.vita$ExportQuantity_VitA,decreasing=T),][1:20,]
+# Plots
+low.export.vita <- ggplot(data=data.export.vita.low,aes(x=reorder(Country,-ExportQuantity_VitA),y=ExportQuantity_VitA)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitA < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.vita$ExportQuantity_VitA,na.rm=T)),linetype=2) +
+  ylim(c(0,max(data.export.vita$ExportQuantity_VitA,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Vitamin A",
+       subtitle="Lowest 20") +
+  theme_bw() + plot_theme
+
+high.export.vita <- ggplot(data=data.export.vita.high,aes(x=reorder(Country,-ExportQuantity_VitA),y=ExportQuantity_VitA)) + 
+  geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitA < 1),width=.7) + 
+  scale_fill_manual(values = colors) +
+  geom_hline(aes(yintercept=mean(data.export.vita$ExportQuantity_VitA,na.rm=T)),linetype=2) +
+  ggtitle("Vitamin A\nLowest 20") +
+  ylim(c(0,max(data.export.vita$ExportQuantity_VitA,na.rm=T))) + 
+  labs(y="Fraction of nutrient requirements exported\n",
+       title="Vitamin A",
+       subtitle="Highest 20") +
+  theme_bw() + plot_theme
+
+
+## Write figures to .pdf files to be merged into single figure in Illustrator
+plotlist = list()
+plotlist[[1]] <- high.export.energy
+plotlist[[2]] <- high.export.protein
+plotlist[[3]] <- high.export.calcium
+plotlist[[4]] <- high.export.folate
+plotlist[[5]] <- high.export.iron
+plotlist[[6]] <- high.export.zinc
+plotlist[[7]] <- high.export.vita
+plotlist[[8]] <- high.export.vitb12
+plotlist[[9]] <- low.export.energy
+plotlist[[10]] <- low.export.protein
+plotlist[[11]] <- low.export.calcium
+plotlist[[12]] <- low.export.folate
+plotlist[[13]] <- low.export.iron
+plotlist[[14]] <- low.export.zinc
+plotlist[[15]] <- low.export.vita
+plotlist[[16]] <- low.export.vitb12
+
+setwd("~/Documents/Work/Projects/Manuscripts/Unsubmitted/Nutrient Trade/Figures/Nutrients By Country")
+for(i in 1:16){
+  ggsave(plot=plotlist[[i]],file=paste("export.file",i,".pdf",sep=""))
+}
