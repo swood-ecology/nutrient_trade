@@ -39,8 +39,11 @@ data.food.protein.low <- data.food.protein[order(data.food.protein$Food_protein)
 # Highest 20
 data.food.protein.high <- data.food.protein[order(data.food.protein$Food_protein,decreasing=T),][1:20,]
 # Plots
-low.food.protein <- ggplot(data=data.food.protein.low,aes(x=reorder(Country,-Food_protein),y=Food_protein)) + 
+low.food.protein <- ggplot(data=data.food.protein.low,
+                           aes(x=reorder(Country,-Food_protein),
+                               y=Food_protein,label=sprintf("%0.2f", round(Food_protein, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_protein < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.protein$Food_protein,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.protein$Food_protein,na.rm=T))) + 
@@ -49,8 +52,11 @@ low.food.protein <- ggplot(data=data.food.protein.low,aes(x=reorder(Country,-Foo
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.protein <- ggplot(data=data.food.protein.high,aes(x=reorder(Country,-Food_protein),y=Food_protein)) + 
+high.food.protein <- ggplot(data=data.food.protein.high,
+                            aes(x=reorder(Country,-Food_protein),
+                                y=Food_protein,label=sprintf("%0.2f", round(Food_protein, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_protein < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.protein$Food_protein,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.protein$Food_protein,na.rm=T))) + 
@@ -66,8 +72,11 @@ data.food.energy.low <- data.food.energy[order(data.food.energy$Food_energy),][1
 # Highest 20
 data.food.energy.high <- data.food.energy[order(data.food.energy$Food_energy,decreasing=T),][1:20,]
 # Plots
-low.food.energy <- ggplot(data=data.food.energy.low,aes(x=reorder(Country,-Food_energy),y=Food_energy)) + 
+low.food.energy <- ggplot(data=data.food.energy.low,
+                          aes(x=reorder(Country,-Food_energy),
+                              y=Food_energy,label=sprintf("%0.2f", round(Food_energy, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_energy < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.energy$Food_energy,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.energy$Food_energy,na.rm=T))) + 
@@ -76,8 +85,11 @@ low.food.energy <- ggplot(data=data.food.energy.low,aes(x=reorder(Country,-Food_
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.energy <- ggplot(data=data.food.energy.high,aes(x=reorder(Country,-Food_energy),y=Food_energy)) + 
+high.food.energy <- ggplot(data=data.food.energy.high,
+                           aes(x=reorder(Country,-Food_energy),
+                               y=Food_energy,label=sprintf("%0.2f", round(Food_energy, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_energy < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.energy$Food_energy,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.energy$Food_energy,na.rm=T))) + 
@@ -94,8 +106,11 @@ data.food.zinc.low <- data.food.zinc[order(data.food.zinc$Food_zinc),][1:20,]
 # Highest 20
 data.food.zinc.high <- data.food.zinc[order(data.food.zinc$Food_zinc,decreasing=T),][1:20,]
 # Plots
-low.food.zinc <- ggplot(data=data.food.zinc.low,aes(x=reorder(Country,-Food_zinc),y=Food_zinc)) + 
+low.food.zinc <- ggplot(data=data.food.zinc.low,
+                        aes(x=reorder(Country,-Food_zinc),
+                            y=Food_zinc,label=sprintf("%0.2f", round(Food_zinc, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_zinc < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.zinc$Food_zinc,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.zinc$Food_zinc,na.rm=T))) + 
@@ -104,8 +119,11 @@ low.food.zinc <- ggplot(data=data.food.zinc.low,aes(x=reorder(Country,-Food_zinc
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.zinc <- ggplot(data=data.food.zinc.high,aes(x=reorder(Country,-Food_zinc),y=Food_zinc)) + 
+high.food.zinc <- ggplot(data=data.food.zinc.high,
+                         aes(x=reorder(Country,-Food_zinc),
+                             y=Food_zinc,label=sprintf("%0.2f", round(Food_zinc, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_zinc < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.zinc$Food_zinc,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.zinc$Food_zinc,na.rm=T))) + 
@@ -122,8 +140,11 @@ data.food.calcium.low <- data.food.calcium[order(data.food.calcium$Food_calcium)
 # Highest 20
 data.food.calcium.high <- data.food.calcium[order(data.food.calcium$Food_calcium,decreasing=T),][1:20,]
 # Plots
-low.food.calcium <- ggplot(data=data.food.calcium.low,aes(x=reorder(Country,-Food_calcium),y=Food_calcium)) + 
+low.food.calcium <- ggplot(data=data.food.calcium.low,
+                           aes(x=reorder(Country,-Food_calcium),
+                               y=Food_calcium,label=sprintf("%0.2f", round(Food_calcium, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_calcium < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.calcium$Food_calcium,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.calcium$Food_calcium,na.rm=T))) + 
@@ -132,8 +153,11 @@ low.food.calcium <- ggplot(data=data.food.calcium.low,aes(x=reorder(Country,-Foo
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.calcium <- ggplot(data=data.food.calcium.high,aes(x=reorder(Country,-Food_calcium),y=Food_calcium)) + 
+high.food.calcium <- ggplot(data=data.food.calcium.high,
+                            aes(x=reorder(Country,-Food_calcium),
+                                y=Food_calcium,label=sprintf("%0.2f", round(Food_calcium, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_calcium < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.calcium$Food_calcium,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.calcium$Food_calcium,na.rm=T))) + 
@@ -150,8 +174,11 @@ data.food.iron.low <- data.food.iron[order(data.food.iron$Food_iron),][1:20,]
 # Highest 20
 data.food.iron.high <- data.food.iron[order(data.food.iron$Food_iron,decreasing=T),][1:20,]
 # Plots
-low.food.iron <- ggplot(data=data.food.iron.low,aes(x=reorder(Country,-Food_iron),y=Food_iron)) + 
+low.food.iron <- ggplot(data=data.food.iron.low,
+                        aes(x=reorder(Country,-Food_iron),
+                            y=Food_iron,label=sprintf("%0.2f", round(Food_iron, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_iron < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.iron$Food_iron,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.iron$Food_iron,na.rm=T))) + 
@@ -160,8 +187,11 @@ low.food.iron <- ggplot(data=data.food.iron.low,aes(x=reorder(Country,-Food_iron
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.iron <- ggplot(data=data.food.iron.high,aes(x=reorder(Country,-Food_iron),y=Food_iron)) + 
+high.food.iron <- ggplot(data=data.food.iron.high,
+                         aes(x=reorder(Country,-Food_iron),
+                             y=Food_iron,label=sprintf("%0.2f", round(Food_iron, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_iron < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.iron$Food_iron,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.iron$Food_iron,na.rm=T))) + 
@@ -178,8 +208,11 @@ data.food.vitb12.low <- data.food.vitb12[order(data.food.vitb12$Food_VitB12),][1
 # Highest 20
 data.food.vitb12.high <- data.food.vitb12[order(data.food.vitb12$Food_VitB12,decreasing=T),][1:20,]
 # Plots
-low.food.vitb12 <- ggplot(data=data.food.vitb12.low,aes(x=reorder(Country,-Food_VitB12),y=Food_VitB12)) + 
+low.food.vitb12 <- ggplot(data=data.food.vitb12.low,
+                          aes(x=reorder(Country,-Food_VitB12),
+                              y=Food_VitB12,label=sprintf("%0.2f", round(Food_VitB12, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_VitB12 < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.vitb12$Food_VitB12,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.vitb12$Food_VitB12,na.rm=T))) + 
@@ -188,8 +221,11 @@ low.food.vitb12 <- ggplot(data=data.food.vitb12.low,aes(x=reorder(Country,-Food_
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.vitb12 <- ggplot(data=data.food.vitb12.high,aes(x=reorder(Country,-Food_VitB12),y=Food_VitB12)) + 
+high.food.vitb12 <- ggplot(data=data.food.vitb12.high,
+                           aes(x=reorder(Country,-Food_VitB12),
+                               y=Food_VitB12,label=sprintf("%0.2f", round(Food_VitB12, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_VitB12 < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.vitb12$Food_VitB12,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.vitb12$Food_VitB12,na.rm=T))) + 
@@ -206,8 +242,11 @@ data.food.folate.low <- data.food.folate[order(data.food.folate$Food_folate),][1
 # Highest 20
 data.food.folate.high <- data.food.folate[order(data.food.folate$Food_folate,decreasing=T),][1:20,]
 # Plots
-low.food.folate <- ggplot(data=data.food.folate.low,aes(x=reorder(Country,-Food_folate),y=Food_folate)) + 
+low.food.folate <- ggplot(data=data.food.folate.low,
+                          aes(x=reorder(Country,-Food_folate),
+                              y=Food_folate,label=sprintf("%0.2f", round(Food_Folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_folate < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.folate$Food_folate,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.folate$Food_folate,na.rm=T))) + 
@@ -216,8 +255,11 @@ low.food.folate <- ggplot(data=data.food.folate.low,aes(x=reorder(Country,-Food_
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.folate <- ggplot(data=data.food.folate.high,aes(x=reorder(Country,-Food_folate),y=Food_folate)) + 
+high.food.folate <- ggplot(data=data.food.folate.high,
+                           aes(x=reorder(Country,-Food_folate),
+                               y=Food_folate,label=sprintf("%0.2f", round(Food_Folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_folate < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.folate$Food_folate,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.folate$Food_folate,na.rm=T))) + 
@@ -235,8 +277,11 @@ data.food.vita.low <- data.food.vita[order(data.food.vita$Food_VitA),][1:20,]
 # Highest 20
 data.food.vita.high <- data.food.vita[order(data.food.vita$Food_VitA,decreasing=T),][1:20,]
 # Plots
-low.food.vita <- ggplot(data=data.food.vita.low,aes(x=reorder(Country,-Food_VitA),y=Food_VitA)) + 
+low.food.vita <- ggplot(data=data.food.vita.low,
+                        aes(x=reorder(Country,-Food_VitA),
+                            y=Food_VitA,label=sprintf("%0.2f", round(Food_VitA, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_VitA < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.vita$Food_VitA,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.food.vita$Food_VitA,na.rm=T))) + 
@@ -245,8 +290,11 @@ low.food.vita <- ggplot(data=data.food.vita.low,aes(x=reorder(Country,-Food_VitA
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.food.vita <- ggplot(data=data.food.vita.high,aes(x=reorder(Country,-Food_VitA),y=Food_VitA)) + 
+high.food.vita <- ggplot(data=data.food.vita.high,
+                         aes(x=reorder(Country,-Food_VitA),
+                             y=Food_VitA,label=sprintf("%0.2f", round(Food_VitA, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_VitA < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.food.vita$Food_VitA,na.rm=T)),linetype=2) +
   ggtitle("Vitamin A\nLowest 20") +
@@ -285,7 +333,7 @@ for(i in 1:16){
 
 ## Country rank plotting, with no trade
 
-## Define no trade variables
+## Define no trade variables as food supply - trade balance
 data.wide$Protein_notrade <- data.wide$Food_protein - (data.wide$`Import Quantity_protein`-data.wide$ExportQuantity_protein)
 data.wide$Energy_notrade <- data.wide$Food_energy - (data.wide$`Import Quantity_energy`-data.wide$ExportQuantity_energy)
 data.wide$Zinc_notrade <- data.wide$Food_zinc - (data.wide$`Import Quantity_zinc`-data.wide$ExportQuantity_zinc)
@@ -300,11 +348,16 @@ data.wide$VitA_notrade <- data.wide$Food_VitA - (data.wide$`Import Quantity_VitA
 data.nt.protein <- data.wide[,c(1,92)]
 # Lowest 20
 data.nt.protein.low <- data.nt.protein[order(data.nt.protein$Protein_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.protein.low$Protein_notrade[data.nt.protein.low$Protein_notrade < 0] <- 0
 # Highest 20
 data.nt.protein.high <- data.nt.protein[order(data.nt.protein$Protein_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.protein <- ggplot(data=data.nt.protein.low,aes(x=reorder(Country,-Protein_notrade),y=Protein_notrade)) + 
+low.nt.protein <- ggplot(data=data.nt.protein.low,
+                         aes(x=reorder(Country,-Protein_notrade),
+                             y=Protein_notrade,label=sprintf("%0.2f", round(Protein_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Protein_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.protein$Protein_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.protein$Protein_notrade,na.rm=T),max(data.nt.protein$Protein_notrade,na.rm=T))) + 
@@ -313,8 +366,11 @@ low.nt.protein <- ggplot(data=data.nt.protein.low,aes(x=reorder(Country,-Protein
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.protein <- ggplot(data=data.nt.protein.high,aes(x=reorder(Country,-Protein_notrade),y=Protein_notrade)) + 
+high.nt.protein <- ggplot(data=data.nt.protein.high,
+                          aes(x=reorder(Country,-Protein_notrade),
+                              y=Protein_notrade,label=sprintf("%0.2f", round(Protein_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Protein_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.protein$Protein_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.protein$Protein_notrade,na.rm=T),max(data.nt.protein$Protein_notrade,na.rm=T))) + 
@@ -328,11 +384,16 @@ high.nt.protein <- ggplot(data=data.nt.protein.high,aes(x=reorder(Country,-Prote
 data.nt.energy <- data.wide[,c(1,93)]
 # Lowest 20
 data.nt.energy.low <- data.nt.energy[order(data.nt.energy$Energy_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.energy.low$Energy_notrade[data.nt.energy.low$Energy_notrade < 0] <- 0
 # Highest 20
 data.nt.energy.high <- data.nt.energy[order(data.nt.energy$Energy_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.energy <- ggplot(data=data.nt.energy.low,aes(x=reorder(Country,-Energy_notrade),y=Energy_notrade)) + 
+low.nt.energy <- ggplot(data=data.nt.energy.low,
+                        aes(x=reorder(Country,-Energy_notrade),
+                            y=Energy_notrade,label=sprintf("%0.2f", round(Energy_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Energy_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.energy$Energy_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.energy$Energy_notrade,na.rm=T),max(data.nt.energy$Energy_notrade,na.rm=T))) + 
@@ -341,8 +402,11 @@ low.nt.energy <- ggplot(data=data.nt.energy.low,aes(x=reorder(Country,-Energy_no
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.energy <- ggplot(data=data.nt.energy.high,aes(x=reorder(Country,-Energy_notrade),y=Energy_notrade)) + 
+high.nt.energy <- ggplot(data=data.nt.energy.high,
+                         aes(x=reorder(Country,-Energy_notrade),
+                             y=Energy_notrade,label=sprintf("%0.2f", round(Energy_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Energy_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.energy$Energy_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.energy$Energy_notrade,na.rm=T),max(data.nt.energy$Energy_notrade,na.rm=T))) + 
@@ -356,11 +420,16 @@ high.nt.energy <- ggplot(data=data.nt.energy.high,aes(x=reorder(Country,-Energy_
 data.nt.zinc <- data.wide[,c(1,94)]
 # Lowest 20
 data.nt.zinc.low <- data.nt.zinc[order(data.nt.zinc$Zinc_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.zinc.low$Zinc_notrade[data.nt.zinc.low$Zinc_notrade < 0] <- 0
 # Highest 20
 data.nt.zinc.high <- data.nt.zinc[order(data.nt.zinc$Zinc_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.zinc <- ggplot(data=data.nt.zinc.low,aes(x=reorder(Country,-Zinc_notrade),y=Zinc_notrade)) + 
+low.nt.zinc <- ggplot(data=data.nt.zinc.low,
+                      aes(x=reorder(Country,-Zinc_notrade),
+                          y=Zinc_notrade,label=sprintf("%0.2f", round(Zinc_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Zinc_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.zinc$Zinc_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.zinc$Zinc_notrade,na.rm=T),max(data.nt.zinc$Zinc_notrade,na.rm=T))) + 
@@ -369,8 +438,11 @@ low.nt.zinc <- ggplot(data=data.nt.zinc.low,aes(x=reorder(Country,-Zinc_notrade)
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.zinc <- ggplot(data=data.nt.zinc.high,aes(x=reorder(Country,-Zinc_notrade),y=Zinc_notrade)) + 
+high.nt.zinc <- ggplot(data=data.nt.zinc.high,
+                       aes(x=reorder(Country,-Zinc_notrade),
+                           y=Zinc_notrade,label=sprintf("%0.2f", round(Zinc_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Zinc_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.zinc$Zinc_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.zinc$Zinc_notrade,na.rm=T),max(data.nt.zinc$Zinc_notrade,na.rm=T))) + 
@@ -384,11 +456,16 @@ high.nt.zinc <- ggplot(data=data.nt.zinc.high,aes(x=reorder(Country,-Zinc_notrad
 data.nt.calcium <- data.wide[,c(1,96)]
 # Lowest 20
 data.nt.calcium.low <- data.nt.calcium[order(data.nt.calcium$Calcium_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.calcium.low$Calcium_notrade[data.nt.calcium.low$Calcium_notrade < 0] <- 0
 # Highest 20
 data.nt.calcium.high <- data.nt.calcium[order(data.nt.calcium$Calcium_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.calcium <- ggplot(data=data.nt.calcium.low,aes(x=reorder(Country,-Calcium_notrade),y=Calcium_notrade)) + 
+low.nt.calcium <- ggplot(data=data.nt.calcium.low,
+                         aes(x=reorder(Country,-Calcium_notrade),
+                             y=Calcium_notrade,label=sprintf("%0.2f", round(Calcium_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Calcium_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.calcium$Calcium_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.calcium$Calcium_notrade,na.rm=T),max(data.nt.calcium$Calcium_notrade,na.rm=T))) + 
@@ -397,8 +474,11 @@ low.nt.calcium <- ggplot(data=data.nt.calcium.low,aes(x=reorder(Country,-Calcium
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.calcium <- ggplot(data=data.nt.calcium.high,aes(x=reorder(Country,-Calcium_notrade),y=Calcium_notrade)) + 
+high.nt.calcium <- ggplot(data=data.nt.calcium.high,
+                          aes(x=reorder(Country,-Calcium_notrade),
+                              y=Calcium_notrade,label=sprintf("%0.2f", round(Calcium_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Calcium_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.calcium$Calcium_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.calcium$Calcium_notrade,na.rm=T),max(data.nt.calcium$Calcium_notrade,na.rm=T))) + 
@@ -412,11 +492,16 @@ high.nt.calcium <- ggplot(data=data.nt.calcium.high,aes(x=reorder(Country,-Calci
 data.nt.iron <- data.wide[,c(1,95)]
 # Lowest 20
 data.nt.iron.low <- data.nt.iron[order(data.nt.iron$Iron_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.iron.low$Iron_notrade[data.nt.iron.low$Iron_notrade < 0] <- 0
 # Highest 20
 data.nt.iron.high <- data.nt.iron[order(data.nt.iron$Iron_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.iron <- ggplot(data=data.nt.iron.low,aes(x=reorder(Country,-Iron_notrade),y=Iron_notrade)) + 
+low.nt.iron <- ggplot(data=data.nt.iron.low,
+                      aes(x=reorder(Country,-Iron_notrade),
+                          y=Iron_notrade,label=sprintf("%0.2f", round(Iron_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Iron_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.iron$Iron_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.iron$Iron_notrade,na.rm=T),max(data.nt.iron$Iron_notrade,na.rm=T))) + 
@@ -425,8 +510,11 @@ low.nt.iron <- ggplot(data=data.nt.iron.low,aes(x=reorder(Country,-Iron_notrade)
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.iron <- ggplot(data=data.nt.iron.high,aes(x=reorder(Country,-Iron_notrade),y=Iron_notrade)) + 
+high.nt.iron <- ggplot(data=data.nt.iron.high,
+                       aes(x=reorder(Country,-Iron_notrade),
+                           y=Iron_notrade,label=sprintf("%0.2f", round(Iron_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Iron_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.iron$Iron_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.iron$Iron_notrade,na.rm=T),max(data.nt.iron$Iron_notrade,na.rm=T))) + 
@@ -440,11 +528,16 @@ high.nt.iron <- ggplot(data=data.nt.iron.high,aes(x=reorder(Country,-Iron_notrad
 data.nt.vitb12 <- data.wide[,c(1,98)]
 # Lowest 20
 data.nt.vitb12.low <- data.nt.vitb12[order(data.nt.vitb12$VitB12_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.vitb12.low$VitB12_notrade[data.nt.vitb12.low$VitB12_notrade < 0] <- 0
 # Highest 20
 data.nt.vitb12.high <- data.nt.vitb12[order(data.nt.vitb12$VitB12_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.vitb12 <- ggplot(data=data.nt.vitb12.low,aes(x=reorder(Country,-VitB12_notrade),y=VitB12_notrade)) + 
+low.nt.vitb12 <- ggplot(data=data.nt.vitb12.low,
+                        aes(x=reorder(Country,-VitB12_notrade),
+                            y=VitB12_notrade,label=sprintf("%0.2f", round(VitB12_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=VitB12_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.vitb12$VitB12_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.vitb12$VitB12_notrade,na.rm=T),max(data.nt.vitb12$VitB12_notrade,na.rm=T))) + 
@@ -453,8 +546,11 @@ low.nt.vitb12 <- ggplot(data=data.nt.vitb12.low,aes(x=reorder(Country,-VitB12_no
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.vitb12 <- ggplot(data=data.nt.vitb12.high,aes(x=reorder(Country,-VitB12_notrade),y=VitB12_notrade)) + 
+high.nt.vitb12 <- ggplot(data=data.nt.vitb12.high,
+                         aes(x=reorder(Country,-VitB12_notrade),
+                             y=VitB12_notrade,label=sprintf("%0.2f", round(VitB12_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=VitB12_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.vitb12$VitB12_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.vitb12$VitB12_notrade,na.rm=T),max(data.nt.vitb12$VitB12_notrade,na.rm=T))) + 
@@ -468,11 +564,16 @@ high.nt.vitb12 <- ggplot(data=data.nt.vitb12.high,aes(x=reorder(Country,-VitB12_
 data.nt.folate <- data.wide[,c(1,97)]
 # Lowest 20
 data.nt.folate.low <- data.nt.folate[order(data.nt.folate$Folate_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.folate.low$Folate_notrade[data.nt.folate.low$Folate_notrade < 0] <- 0
 # Highest 20
 data.nt.folate.high <- data.nt.folate[order(data.nt.folate$Folate_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.folate <- ggplot(data=data.nt.folate.low,aes(x=reorder(Country,-Folate_notrade),y=Folate_notrade)) + 
+low.nt.folate <- ggplot(data=data.nt.folate.low,
+                        aes(x=reorder(Country,-Folate_notrade),
+                            y=Folate_notrade,label=sprintf("%0.2f", round(Folate_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Folate_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.folate$Folate_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.folate$Folate_notrade,na.rm=T),max(data.nt.folate$Folate_notrade,na.rm=T))) + 
@@ -481,8 +582,11 @@ low.nt.folate <- ggplot(data=data.nt.folate.low,aes(x=reorder(Country,-Folate_no
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.folate <- ggplot(data=data.nt.folate.high,aes(x=reorder(Country,-Folate_notrade),y=Folate_notrade)) + 
+high.nt.folate <- ggplot(data=data.nt.folate.high,
+                         aes(x=reorder(Country,-Folate_notrade),
+                             y=Folate_notrade,label=sprintf("%0.2f", round(Folate_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Folate_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.folate$Folate_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.folate$Folate_notrade,na.rm=T),max(data.nt.folate$Folate_notrade,na.rm=T))) + 
@@ -494,14 +598,18 @@ high.nt.folate <- ggplot(data=data.nt.folate.high,aes(x=reorder(Country,-Folate_
 
 ## Vitamin A
 data.nt.vita <- data.wide[,c(1,99)]
-
 # Lowest 20
 data.nt.vita.low <- data.nt.vita[order(data.nt.vita$VitA_notrade),][1:20,]
+# Set all values <0 to be 0
+data.nt.vita.low$VitA_notrade[data.nt.vita.low$VitA_notrade < 0] <- 0
 # Highest 20
 data.nt.vita.high <- data.nt.vita[order(data.nt.vita$VitA_notrade,decreasing=T),][1:20,]
 # Plots
-low.nt.vita <- ggplot(data=data.nt.vita.low,aes(x=reorder(Country,-VitA_notrade),y=VitA_notrade)) + 
+low.nt.vita <- ggplot(data=data.nt.vita.low,
+                      aes(x=reorder(Country,-VitA_notrade),
+                          y=VitA_notrade,label=sprintf("%0.2f", round(VitA_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=VitA_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.vita$VitA_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.vita$VitA_notrade,na.rm=T),max(data.nt.vita$VitA_notrade,na.rm=T))) + 
@@ -510,8 +618,11 @@ low.nt.vita <- ggplot(data=data.nt.vita.low,aes(x=reorder(Country,-VitA_notrade)
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.nt.vita <- ggplot(data=data.nt.vita.high,aes(x=reorder(Country,-VitA_notrade),y=VitA_notrade)) + 
+high.nt.vita <- ggplot(data=data.nt.vita.high,
+                       aes(x=reorder(Country,-VitA_notrade),
+                           y=VitA_notrade,label=sprintf("%0.2f", round(VitA_notrade, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=VitA_notrade < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.nt.vita$VitA_notrade,na.rm=T)),linetype=2) +
   ylim(c(min(data.nt.vita$VitA_notrade,na.rm=T),max(data.nt.vita$VitA_notrade,na.rm=T))) + 
@@ -556,8 +667,11 @@ data.import.protein.low <- data.import.protein[order(data.import.protein$ImportQ
 # Highest 20
 data.import.protein.high <- data.import.protein[order(data.import.protein$ImportQuantity_protein,decreasing=T),][1:20,]
 # Plots
-low.import.protein <- ggplot(data=data.import.protein.low,aes(x=reorder(Country,-ImportQuantity_protein),y=ImportQuantity_protein)) + 
+low.import.protein <- ggplot(data=data.import.protein.low,
+                             aes(x=reorder(Country,-ImportQuantity_protein),
+                                 y=ImportQuantity_protein,label=sprintf("%0.2f", round(ImportQuantity_protein, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_protein < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.protein$ImportQuantity_protein,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.protein$ImportQuantity_protein,na.rm=T))) + 
@@ -566,8 +680,11 @@ low.import.protein <- ggplot(data=data.import.protein.low,aes(x=reorder(Country,
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.protein <- ggplot(data=data.import.protein.high,aes(x=reorder(Country,-ImportQuantity_protein),y=ImportQuantity_protein)) + 
+high.import.protein <- ggplot(data=data.import.protein.high,
+                              aes(x=reorder(Country,-ImportQuantity_protein),
+                                  y=ImportQuantity_protein,label=sprintf("%0.2f", round(ImportQuantity_protein, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_protein < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.protein$ImportQuantity_protein,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.protein$ImportQuantity_protein,na.rm=T))) + 
@@ -584,8 +701,11 @@ data.import.energy.low <- data.import.energy[order(data.import.energy$ImportQuan
 # Highest 20
 data.import.energy.high <- data.import.energy[order(data.import.energy$ImportQuantity_energy,decreasing=T),][1:20,]
 # Plots
-low.import.energy <- ggplot(data=data.import.energy.low,aes(x=reorder(Country,-ImportQuantity_energy),y=ImportQuantity_energy)) + 
+low.import.energy <- ggplot(data=data.import.energy.low,
+                            aes(x=reorder(Country,-ImportQuantity_energy),
+                                y=ImportQuantity_energy,label=sprintf("%0.2f", round(ImportQuantity_energy, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_energy < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.energy$ImportQuantity_energy,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.energy$ImportQuantity_energy,na.rm=T))) + 
@@ -594,8 +714,11 @@ low.import.energy <- ggplot(data=data.import.energy.low,aes(x=reorder(Country,-I
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.energy <- ggplot(data=data.import.energy.high,aes(x=reorder(Country,-ImportQuantity_energy),y=ImportQuantity_energy)) + 
+high.import.energy <- ggplot(data=data.import.energy.high,
+                             aes(x=reorder(Country,-ImportQuantity_energy),
+                                 y=ImportQuantity_energy,label=sprintf("%0.2f", round(ImportQuantity_energy, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_energy < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.energy$ImportQuantity_energy,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.energy$ImportQuantity_energy,na.rm=T))) + 
@@ -613,8 +736,11 @@ data.import.zinc.low <- data.import.zinc[order(data.import.zinc$ImportQuantity_z
 # Highest 20
 data.import.zinc.high <- data.import.zinc[order(data.import.zinc$ImportQuantity_zinc,decreasing=T),][1:20,]
 # Plots
-low.import.zinc <- ggplot(data=data.import.zinc.low,aes(x=reorder(Country,-ImportQuantity_zinc),y=ImportQuantity_zinc)) + 
+low.import.zinc <- ggplot(data=data.import.zinc.low,
+                          aes(x=reorder(Country,-ImportQuantity_zinc),
+                              y=ImportQuantity_zinc,label=sprintf("%0.2f", round(ImportQuantity_zinc, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_zinc < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.zinc$ImportQuantity_zinc,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.zinc$ImportQuantity_zinc,na.rm=T))) + 
@@ -623,8 +749,11 @@ low.import.zinc <- ggplot(data=data.import.zinc.low,aes(x=reorder(Country,-Impor
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.zinc <- ggplot(data=data.import.zinc.high,aes(x=reorder(Country,-ImportQuantity_zinc),y=ImportQuantity_zinc)) + 
+high.import.zinc <- ggplot(data=data.import.zinc.high,
+                           aes(x=reorder(Country,-ImportQuantity_zinc),
+                               y=ImportQuantity_zinc,label=sprintf("%0.2f", round(ImportQuantity_zinc, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_zinc < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.zinc$ImportQuantity_zinc,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.zinc$ImportQuantity_zinc,na.rm=T))) + 
@@ -642,8 +771,11 @@ data.import.calcium.low <- data.import.calcium[order(data.import.calcium$ImportQ
 # Highest 20
 data.import.calcium.high <- data.import.calcium[order(data.import.calcium$ImportQuantity_calcium,decreasing=T),][1:20,]
 # Plots
-low.import.calcium <- ggplot(data=data.import.calcium.low,aes(x=reorder(Country,-ImportQuantity_calcium),y=ImportQuantity_calcium)) + 
+low.import.calcium <- ggplot(data=data.import.calcium.low,
+                             aes(x=reorder(Country,-ImportQuantity_calcium),
+                                 y=ImportQuantity_calcium,label=sprintf("%0.2f", round(ImportQuantity_calcium, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_calcium < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.calcium$ImportQuantity_calcium,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.calcium$ImportQuantity_calcium,na.rm=T))) + 
@@ -652,8 +784,11 @@ low.import.calcium <- ggplot(data=data.import.calcium.low,aes(x=reorder(Country,
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.calcium <- ggplot(data=data.import.calcium.high,aes(x=reorder(Country,-ImportQuantity_calcium),y=ImportQuantity_calcium)) + 
+high.import.calcium <- ggplot(data=data.import.calcium.high,
+                              aes(x=reorder(Country,-ImportQuantity_calcium),
+                                  y=ImportQuantity_calcium,label=sprintf("%0.2f", round(ImportQuantity_calcium, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_calcium < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.calcium$ImportQuantity_calcium,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.calcium$ImportQuantity_calcium,na.rm=T))) + 
@@ -671,8 +806,11 @@ data.import.iron.low <- data.import.iron[order(data.import.iron$ImportQuantity_i
 # Highest 20
 data.import.iron.high <- data.import.iron[order(data.import.iron$ImportQuantity_iron,decreasing=T),][1:20,]
 # Plots
-low.import.iron <- ggplot(data=data.import.iron.low,aes(x=reorder(Country,-ImportQuantity_iron),y=ImportQuantity_iron)) + 
+low.import.iron <- ggplot(data=data.import.iron.low,
+                          aes(x=reorder(Country,-ImportQuantity_iron),
+                              y=ImportQuantity_iron,label=sprintf("%0.2f", round(ImportQuantity_iron, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_iron < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.iron$ImportQuantity_iron,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.iron$ImportQuantity_iron,na.rm=T))) + 
@@ -681,8 +819,11 @@ low.import.iron <- ggplot(data=data.import.iron.low,aes(x=reorder(Country,-Impor
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.iron <- ggplot(data=data.import.iron.high,aes(x=reorder(Country,-ImportQuantity_iron),y=ImportQuantity_iron)) + 
+high.import.iron <- ggplot(data=data.import.iron.high,
+                           aes(x=reorder(Country,-ImportQuantity_iron),
+                               y=ImportQuantity_iron,label=sprintf("%0.2f", round(ImportQuantity_iron, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_iron < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.iron$ImportQuantity_iron,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.iron$ImportQuantity_iron,na.rm=T))) + 
@@ -700,8 +841,11 @@ data.import.vitb12.low <- data.import.vitb12[order(data.import.vitb12$ImportQuan
 # Highest 20
 data.import.vitb12.high <- data.import.vitb12[order(data.import.vitb12$ImportQuantity_VitB12,decreasing=T),][1:20,]
 # Plots
-low.import.vitb12 <- ggplot(data=data.import.vitb12.low,aes(x=reorder(Country,-ImportQuantity_VitB12),y=ImportQuantity_VitB12)) + 
+low.import.vitb12 <- ggplot(data=data.import.vitb12.low,
+                            aes(x=reorder(Country,-ImportQuantity_VitB12),
+                                y=ImportQuantity_VitB12,label=sprintf("%0.2f", round(ImportQuantity_VitB12, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_VitB12 < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.vitb12$ImportQuantity_VitB12,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.vitb12$ImportQuantity_VitB12,na.rm=T))) + 
@@ -710,8 +854,11 @@ low.import.vitb12 <- ggplot(data=data.import.vitb12.low,aes(x=reorder(Country,-I
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.vitb12 <- ggplot(data=data.import.vitb12.high,aes(x=reorder(Country,-ImportQuantity_VitB12),y=ImportQuantity_VitB12)) + 
+high.import.vitb12 <- ggplot(data=data.import.vitb12.high,
+                             aes(x=reorder(Country,-ImportQuantity_VitB12),
+                                 y=ImportQuantity_VitB12,label=sprintf("%0.2f", round(ImportQuantity_VitB12, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_VitB12 < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.vitb12$ImportQuantity_VitB12,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.vitb12$ImportQuantity_VitB12,na.rm=T))) + 
@@ -729,8 +876,11 @@ data.import.folate.low <- data.import.folate[order(data.import.folate$ImportQuan
 # Highest 20
 data.import.folate.high <- data.import.folate[order(data.import.folate$ImportQuantity_folate,decreasing=T),][1:20,]
 # Plots
-low.import.folate <- ggplot(data=data.import.folate.low,aes(x=reorder(Country,-ImportQuantity_folate),y=ImportQuantity_folate)) + 
+low.import.folate <- ggplot(data=data.import.folate.low,
+                            aes(x=reorder(Country,-ImportQuantity_folate),
+                                y=ImportQuantity_folate,label=sprintf("%0.2f", round(ImportQuantity_folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_folate < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.folate$ImportQuantity_folate,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.folate$ImportQuantity_folate,na.rm=T))) + 
@@ -739,8 +889,11 @@ low.import.folate <- ggplot(data=data.import.folate.low,aes(x=reorder(Country,-I
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.folate <- ggplot(data=data.import.folate.high,aes(x=reorder(Country,-ImportQuantity_folate),y=ImportQuantity_folate)) + 
+high.import.folate <- ggplot(data=data.import.folate.high,
+                             aes(x=reorder(Country,-ImportQuantity_folate),
+                                 y=ImportQuantity_folate,label=sprintf("%0.2f", round(ImportQuantity_folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_folate < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.folate$ImportQuantity_folate,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.folate$ImportQuantity_folate,na.rm=T))) + 
@@ -758,8 +911,11 @@ data.import.vita.low <- data.import.vita[order(data.import.vita$ImportQuantity_V
 # Highest 20
 data.import.vita.high <- data.import.vita[order(data.import.vita$ImportQuantity_VitA,decreasing=T),][1:20,]
 # Plots
-low.import.vita <- ggplot(data=data.import.vita.low,aes(x=reorder(Country,-ImportQuantity_VitA),y=ImportQuantity_VitA)) + 
+low.import.vita <- ggplot(data=data.import.vita.low,
+                          aes(x=reorder(Country,-ImportQuantity_VitA),
+                              y=ImportQuantity_VitA,label=sprintf("%0.2f", round(ImportQuantity_VitA, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_VitA < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.vita$ImportQuantity_VitA,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.import.vita$ImportQuantity_VitA,na.rm=T))) + 
@@ -768,8 +924,11 @@ low.import.vita <- ggplot(data=data.import.vita.low,aes(x=reorder(Country,-Impor
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.import.vita <- ggplot(data=data.import.vita.high,aes(x=reorder(Country,-ImportQuantity_VitA),y=ImportQuantity_VitA)) + 
+high.import.vita <- ggplot(data=data.import.vita.high,
+                           aes(x=reorder(Country,-ImportQuantity_VitA),
+                               y=ImportQuantity_VitA,label=sprintf("%0.2f", round(ImportQuantity_VitA, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ImportQuantity_VitA < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.import.vita$ImportQuantity_VitA,na.rm=T)),linetype=2) +
   ggtitle("Vitamin A\nLowest 20") +
@@ -814,8 +973,11 @@ data.export.protein.low <- data.export.protein[order(data.export.protein$ExportQ
 # Highest 20
 data.export.protein.high <- data.export.protein[order(data.export.protein$ExportQuantity_protein,decreasing=T),][1:20,]
 # Plots
-low.export.protein <- ggplot(data=data.export.protein.low,aes(x=reorder(Country,-ExportQuantity_protein),y=ExportQuantity_protein)) + 
+low.export.protein <- ggplot(data=data.export.protein.low,
+                             aes(x=reorder(Country,-ExportQuantity_protein),
+                                 y=ExportQuantity_protein,label=sprintf("%0.2f", round(ExportQuantity_protein, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_protein < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.protein$ExportQuantity_protein,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.protein$ExportQuantity_protein,na.rm=T))) + 
@@ -824,8 +986,11 @@ low.export.protein <- ggplot(data=data.export.protein.low,aes(x=reorder(Country,
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.protein <- ggplot(data=data.export.protein.high,aes(x=reorder(Country,-ExportQuantity_protein),y=ExportQuantity_protein)) + 
+high.export.protein <- ggplot(data=data.export.protein.high,
+                              aes(x=reorder(Country,-ExportQuantity_protein),
+                                  y=ExportQuantity_protein,label=sprintf("%0.2f", round(ExportQuantity_protein, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_protein < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.protein$ExportQuantity_protein,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.protein$ExportQuantity_protein,na.rm=T))) + 
@@ -842,8 +1007,11 @@ data.export.energy.low <- data.export.energy[order(data.export.energy$ExportQuan
 # Highest 20
 data.export.energy.high <- data.export.energy[order(data.export.energy$ExportQuantity_energy,decreasing=T),][1:20,]
 # Plots
-low.export.energy <- ggplot(data=data.export.energy.low,aes(x=reorder(Country,-ExportQuantity_energy),y=ExportQuantity_energy)) + 
+low.export.energy <- ggplot(data=data.export.energy.low,
+                            aes(x=reorder(Country,-ExportQuantity_energy),
+                                y=ExportQuantity_energy,label=sprintf("%0.2f", round(ExportQuantity_energy, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_energy < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.energy$ExportQuantity_energy,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.energy$ExportQuantity_energy,na.rm=T))) + 
@@ -852,8 +1020,11 @@ low.export.energy <- ggplot(data=data.export.energy.low,aes(x=reorder(Country,-E
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.energy <- ggplot(data=data.export.energy.high,aes(x=reorder(Country,-ExportQuantity_energy),y=ExportQuantity_energy)) + 
+high.export.energy <- ggplot(data=data.export.energy.high,
+                             aes(x=reorder(Country,-ExportQuantity_energy),
+                                 y=ExportQuantity_energy,label=sprintf("%0.2f", round(ExportQuantity_energy, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_energy < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.energy$ExportQuantity_energy,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.energy$ExportQuantity_energy,na.rm=T))) + 
@@ -871,8 +1042,11 @@ data.export.zinc.low <- data.export.zinc[order(data.export.zinc$ExportQuantity_z
 # Highest 20
 data.export.zinc.high <- data.export.zinc[order(data.export.zinc$ExportQuantity_zinc,decreasing=T),][1:20,]
 # Plots
-low.export.zinc <- ggplot(data=data.export.zinc.low,aes(x=reorder(Country,-ExportQuantity_zinc),y=ExportQuantity_zinc)) + 
+low.export.zinc <- ggplot(data=data.export.zinc.low,
+                          aes(x=reorder(Country,-ExportQuantity_zinc),
+                              y=ExportQuantity_zinc,label=sprintf("%0.2f", round(ExportQuantity_zinc, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_zinc < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.zinc$ExportQuantity_zinc,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.zinc$ExportQuantity_zinc,na.rm=T))) + 
@@ -881,8 +1055,11 @@ low.export.zinc <- ggplot(data=data.export.zinc.low,aes(x=reorder(Country,-Expor
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.zinc <- ggplot(data=data.export.zinc.high,aes(x=reorder(Country,-ExportQuantity_zinc),y=ExportQuantity_zinc)) + 
+high.export.zinc <- ggplot(data=data.export.zinc.high,
+                           aes(x=reorder(Country,-ExportQuantity_zinc),
+                               y=ExportQuantity_zinc,label=sprintf("%0.2f", round(ExportQuantity_zinc, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_zinc < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.zinc$ExportQuantity_zinc,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.zinc$ExportQuantity_zinc,na.rm=T))) + 
@@ -900,8 +1077,11 @@ data.export.calcium.low <- data.export.calcium[order(data.export.calcium$ExportQ
 # Highest 20
 data.export.calcium.high <- data.export.calcium[order(data.export.calcium$ExportQuantity_calcium,decreasing=T),][1:20,]
 # Plots
-low.export.calcium <- ggplot(data=data.export.calcium.low,aes(x=reorder(Country,-ExportQuantity_calcium),y=ExportQuantity_calcium)) + 
+low.export.calcium <- ggplot(data=data.export.calcium.low,
+                             aes(x=reorder(Country,-ExportQuantity_calcium),
+                                 y=ExportQuantity_calcium,label=sprintf("%0.2f", round(ExportQuantity_calcium, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_calcium < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.calcium$ExportQuantity_calcium,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.calcium$ExportQuantity_calcium,na.rm=T))) + 
@@ -910,8 +1090,11 @@ low.export.calcium <- ggplot(data=data.export.calcium.low,aes(x=reorder(Country,
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.calcium <- ggplot(data=data.export.calcium.high,aes(x=reorder(Country,-ExportQuantity_calcium),y=ExportQuantity_calcium)) + 
+high.export.calcium <- ggplot(data=data.export.calcium.high,
+                              aes(x=reorder(Country,-ExportQuantity_calcium),
+                                  y=ExportQuantity_calcium,label=sprintf("%0.2f", round(ExportQuantity_calcium, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_calcium < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.calcium$ExportQuantity_calcium,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.calcium$ExportQuantity_calcium,na.rm=T))) + 
@@ -929,8 +1112,11 @@ data.export.iron.low <- data.export.iron[order(data.export.iron$ExportQuantity_i
 # Highest 20
 data.export.iron.high <- data.export.iron[order(data.export.iron$ExportQuantity_iron,decreasing=T),][1:20,]
 # Plots
-low.export.iron <- ggplot(data=data.export.iron.low,aes(x=reorder(Country,-ExportQuantity_iron),y=ExportQuantity_iron)) + 
+low.export.iron <- ggplot(data=data.export.iron.low,
+                          aes(x=reorder(Country,-ExportQuantity_iron),
+                              y=ExportQuantity_iron,label=sprintf("%0.2f", round(ExportQuantity_iron, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_iron < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.iron$ExportQuantity_iron,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.iron$ExportQuantity_iron,na.rm=T))) + 
@@ -939,8 +1125,11 @@ low.export.iron <- ggplot(data=data.export.iron.low,aes(x=reorder(Country,-Expor
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.iron <- ggplot(data=data.export.iron.high,aes(x=reorder(Country,-ExportQuantity_iron),y=ExportQuantity_iron)) + 
+high.export.iron <- ggplot(data=data.export.iron.high,
+                           aes(x=reorder(Country,-ExportQuantity_iron),
+                               y=ExportQuantity_iron,label=sprintf("%0.2f", round(ExportQuantity_iron, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_iron < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.iron$ExportQuantity_iron,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.iron$ExportQuantity_iron,na.rm=T))) + 
@@ -958,8 +1147,11 @@ data.export.vitb12.low <- data.export.vitb12[order(data.export.vitb12$ExportQuan
 # Highest 20
 data.export.vitb12.high <- data.export.vitb12[order(data.export.vitb12$ExportQuantity_VitB12,decreasing=T),][1:20,]
 # Plots
-low.export.vitb12 <- ggplot(data=data.export.vitb12.low,aes(x=reorder(Country,-ExportQuantity_VitB12),y=ExportQuantity_VitB12)) + 
+low.export.vitb12 <- ggplot(data=data.export.vitb12.low,
+                            aes(x=reorder(Country,-ExportQuantity_VitB12),
+                                y=ExportQuantity_VitB12,label=sprintf("%0.2f", round(ExportQuantity_VitB12, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitB12 < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.vitb12$ExportQuantity_VitB12,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.vitb12$ExportQuantity_VitB12,na.rm=T))) + 
@@ -968,8 +1160,11 @@ low.export.vitb12 <- ggplot(data=data.export.vitb12.low,aes(x=reorder(Country,-E
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.vitb12 <- ggplot(data=data.export.vitb12.high,aes(x=reorder(Country,-ExportQuantity_VitB12),y=ExportQuantity_VitB12)) + 
+high.export.vitb12 <- ggplot(data=data.export.vitb12.high,
+                             aes(x=reorder(Country,-ExportQuantity_VitB12),
+                                 y=ExportQuantity_VitB12,label=sprintf("%0.2f", round(ExportQuantity_VitB12, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitB12 < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.vitb12$ExportQuantity_VitB12,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.vitb12$ExportQuantity_VitB12,na.rm=T))) + 
@@ -987,8 +1182,11 @@ data.export.folate.low <- data.export.folate[order(data.export.folate$ExportQuan
 # Highest 20
 data.export.folate.high <- data.export.folate[order(data.export.folate$ExportQuantity_folate,decreasing=T),][1:20,]
 # Plots
-low.export.folate <- ggplot(data=data.export.folate.low,aes(x=reorder(Country,-ExportQuantity_folate),y=ExportQuantity_folate)) + 
+low.export.folate <- ggplot(data=data.export.folate.low,
+                            aes(x=reorder(Country,-ExportQuantity_folate),
+                                y=ExportQuantity_folate,label=sprintf("%0.2f", round(ExportQuantity_folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_folate < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.folate$ExportQuantity_folate,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.folate$ExportQuantity_folate,na.rm=T))) + 
@@ -997,8 +1195,11 @@ low.export.folate <- ggplot(data=data.export.folate.low,aes(x=reorder(Country,-E
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.folate <- ggplot(data=data.export.folate.high,aes(x=reorder(Country,-ExportQuantity_folate),y=ExportQuantity_folate)) + 
+high.export.folate <- ggplot(data=data.export.folate.high,
+                             aes(x=reorder(Country,-ExportQuantity_folate),
+                                 y=ExportQuantity_folate,label=sprintf("%0.2f", round(ExportQuantity_folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_folate < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.folate$ExportQuantity_folate,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.folate$ExportQuantity_folate,na.rm=T))) + 
@@ -1016,8 +1217,11 @@ data.export.vita.low <- data.export.vita[order(data.export.vita$ExportQuantity_V
 # Highest 20
 data.export.vita.high <- data.export.vita[order(data.export.vita$ExportQuantity_VitA,decreasing=T),][1:20,]
 # Plots
-low.export.vita <- ggplot(data=data.export.vita.low,aes(x=reorder(Country,-ExportQuantity_VitA),y=ExportQuantity_VitA)) + 
+low.export.vita <- ggplot(data=data.export.vita.low,
+                          aes(x=reorder(Country,-ExportQuantity_VitA),
+                              y=ExportQuantity_VitA,label=sprintf("%0.2f", round(ExportQuantity_VitA, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitA < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.vita$ExportQuantity_VitA,na.rm=T)),linetype=2) +
   ylim(c(0,max(data.export.vita$ExportQuantity_VitA,na.rm=T))) + 
@@ -1026,8 +1230,11 @@ low.export.vita <- ggplot(data=data.export.vita.low,aes(x=reorder(Country,-Expor
        subtitle="Lowest 20") +
   theme_bw() + plot_theme
 
-high.export.vita <- ggplot(data=data.export.vita.high,aes(x=reorder(Country,-ExportQuantity_VitA),y=ExportQuantity_VitA)) + 
+high.export.vita <- ggplot(data=data.export.vita.high,
+                           aes(x=reorder(Country,-ExportQuantity_VitA),
+                               y=ExportQuantity_VitA,label=sprintf("%0.2f", round(ExportQuantity_VitA, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=ExportQuantity_VitA < 1),width=.7) + 
+  geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
   geom_hline(aes(yintercept=mean(data.export.vita$ExportQuantity_VitA,na.rm=T)),linetype=2) +
   ggtitle("Vitamin A\nLowest 20") +
