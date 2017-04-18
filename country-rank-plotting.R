@@ -244,7 +244,7 @@ data.food.folate.high <- data.food.folate[order(data.food.folate$Food_folate,dec
 # Plots
 low.food.folate <- ggplot(data=data.food.folate.low,
                           aes(x=reorder(Country,-Food_folate),
-                              y=Food_folate,label=sprintf("%0.2f", round(Food_Folate, digits = 2)))) + 
+                              y=Food_folate,label=sprintf("%0.2f", round(Food_folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_folate < 1),width=.7) + 
   geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
@@ -257,7 +257,7 @@ low.food.folate <- ggplot(data=data.food.folate.low,
 
 high.food.folate <- ggplot(data=data.food.folate.high,
                            aes(x=reorder(Country,-Food_folate),
-                               y=Food_folate,label=sprintf("%0.2f", round(Food_Folate, digits = 2)))) + 
+                               y=Food_folate,label=sprintf("%0.2f", round(Food_folate, digits = 2)))) + 
   geom_bar(stat="identity",position="dodge",aes(fill=Food_folate < 1),width=.7) + 
   geom_text(size=2,vjust=-0.75) +
   scale_fill_manual(values = colors) +
