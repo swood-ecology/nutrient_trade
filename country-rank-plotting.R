@@ -11,6 +11,11 @@ library(reshape2)   # For transforming data frame from long to wide
 ## Read in data
 data <- read.csv("/Volumes/My Passport for Mac/Data/Nutrition/Food Balance Sheets/FoodBalanceSheets_FORMAT_7_ALT_20002011AVG_ALL_ELEMENTS_RNIperCapita.csv",header=T)
 
+## Cast data wide
+data.wide <- melt(data[,-1],id.vars=c("Country","Element"))
+data.wide <- dcast(data.wide,Country~Element+variable)
+
+
 ## Define plotting theme
 plot_theme <- theme(
   panel.grid=element_blank(),
@@ -25,10 +30,6 @@ plot_theme <- theme(
 colors <- c("#a50026","#006837")
 names(colors) <- c("TRUE","FALSE")
   
-## Cast data wide
-data.wide <- melt(data[,-1],id.vars=c("Country","Element"))
-data.wide <- dcast(data.wide,Country~Element+variable)
-
 
 ## Country rank plotting, with trade
 
