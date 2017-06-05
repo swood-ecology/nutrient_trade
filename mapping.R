@@ -1,5 +1,43 @@
 library(rworldmap)
 
+# Write multi-plot function to include multiple ggplot2 panels into single figure
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+
 # read nutrient produciton data
 rni.cap <- read.csv("/Volumes/My Passport for Mac/Data/Nutrition/Food Balance Sheets/FoodBalanceSheets_FORMAT_7_20002011AVG_Food_Production_Trade_RNIperCapita.csv",header=T)
 rni.cap <- rni.cap[,-1]
@@ -10,7 +48,7 @@ raw <- raw[,c(1,2)]
 raw <- unique(raw)
 named <- merge(rni.cap,raw,by="Country")
 colnames(named)[12] <- "FAOSTAT"
-clu <- read.csv("~/Documents/Work/Projects/Manuscripts/Unsubmitted/Nutrient Trade/Data/countryLookUp.csv",header=T)
+clu <- read.csv("~/Documents/Work/Writing/Manuscripts/Unsubmitted/Nutrient Trade/Data/countryLookUp.csv",header=T)
 mapping <- merge(named,clu,by="FAOSTAT")
 mapping <- mapping[,c(3:12,16)]
 
@@ -52,7 +90,7 @@ write.csv(mapping,"/Volumes/My Passport for Mac/Data/Nutrition/Food Balance Shee
 library(ggplot2)
 library(maptools)
 
-area <- readShapePoly("/Volumes/My Passport for Mac/Data/GIS Data/National Borders Natural Earth/ne_50m_admin_0_countries.shp")
+area <- readShapePoly("/Volumes/My Passport for Mac/Data/GIS Data/Natural Earth/National Borders/ne_50m_admin_0_countries.shp")
 
 area.points <- fortify(area,region="iso_a3")
 area.points <- area.points[area.points$id!='-99',]
@@ -67,10 +105,10 @@ ditch_the_axes <- theme(
   axis.ticks = element_blank(),
   panel.border = element_blank(),
   panel.grid = element_blank(),
-  panel.background = element_rect(fill="grey40"),
-  plot.background = element_rect(fill="grey40"),
+  panel.background = element_rect(fill="white"),
+  plot.background = element_rect(fill="white"),
   axis.title = element_blank(),
-  legend.background = element_rect(fill="grey40"),
+  legend.background = element_rect(fill="white"),
   legend.position="bottom",
   legend.box="horizontal"
 )
@@ -133,99 +171,80 @@ nut.fd <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = gr
 nut.fd 
 
 # Plot fraction of population potentially nourished
+# Protein scale: -2,0,1,2.3,3,5,7.5,32.06
+to.plot$protein.cut <- cut(to.plot$Food_protein, c(1,2.3,3,5))
+cols.protein <- c("#e0f3f8","#abd9e9","#74add1")
 protein_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_protein), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Protein",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-                                        guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = to.plot, aes(fill = protein.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Protein",values=cols.protein) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 protein_food 
 
+# Energy scale: -1.34, 0, 0.5, 1, 1.25, 1.5, 2, 3.5, 8
+to.plot$energy.cut <- cut(to.plot$Food_energy, c(0.5,1,1.25,1.5,2.01))
+cols.energy <- c("#f46d43","#e0f3f8","#abd9e9","#74add1")
 energy_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_energy), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Energy",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = to.plot, aes(fill = energy.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Energy",values=cols.energy) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 energy_food 
 
+# Iron scale: -5, 0, 0.25, 0.5, 1, 1.25, 1.75, 2.3, 5.5, 14
+to.plot$iron.cut <- cut(to.plot$Food_iron, c(0,0.25,0.5,1,1.25,1.75,2.3,5.5))
+cols.iron <- c("#d73027","#f46d43","#fdae61","#e0f3f8","#abd9e9","#74add1","#4575b4")
 iron_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_iron), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Iron",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = to.plot, aes(fill = iron.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Iron",values=cols.iron) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 iron_food 
 
+# Zinc scale: -2.3, 0, .5, 1, 1.75, 2.5, 3.5, 5.5, 22
+to.plot$zinc.cut <- cut(to.plot$Food_zinc, c(0.5,1,1.75,2.5,3.5,5.5))
+cols.zinc <- c("#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4")
 zinc_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_zinc), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Zinc",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = to.plot, aes(fill = zinc.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Zinc",values=cols.zinc) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 zinc_food 
 
+# Calcium scale: -0.47, 0, 0.2, 0.75, 1, 2, 2.3, 2.75, 5, 33.6
+to.plot$calc.cut <- cut(to.plot$Food_calcium, c(0.2,0.75,1,2,2.3,2.75,5))
+cols.calc <- c("#f46d43","#fdae61","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 calcium_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_calcium), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Calcium",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = to.plot, aes(fill = calc.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Calcium",values=cols.calc) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 calcium_food 
 
+# Folate scale: -3.7, 0, 0.3, 0.5, 1, 1.25, 1.5, 2, 3.5, 15 
+to.plot$folate.cut <- cut(to.plot$Food_folate, c(0.3,0.5,1,1.25,1.5,2))
+cols.folate <- c("#f46d43","#fdae61","#e0f3f8","#abd9e9","#74add1")
 folate_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_folate), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Folate",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = to.plot, aes(fill = folate.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Folate",values=cols.folate) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) 
 folate_food 
 
+# Vitamin A scale: -0.6, 0, 0.43, 1, 2, 3.75, 5, 9, 26.1
+to.plot$vita.cut <- cut(to.plot$Food_VitA, c(0.43,1,2,3.75,5,9))
+cols.vita <- c("#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4")
 VitA_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_VitA), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Vitamin A",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = to.plot, aes(fill = vita.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Vitamin A",values=cols.vita) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) 
 VitA_food 
 
-VitB12_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = to.plot, aes(fill = Food_VitB12), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Vitamin B12",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
-VitB12_food 
+# Vitamin B12 scale: -0.9, 0, 0.5, 1, 3, 5.5, 8, 12, 91.5
+to.plot$vitb12.cut <- cut(to.plot$Food_VitB12, c(0.5,1,3,5.5,8,12))
+cols.vitb12 <- c("#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4")
+  VitB12_food <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
+    geom_polygon(data = to.plot, aes(fill = vitb12.cut), color="white", size=0.25) + 
+    scale_fill_manual(name="Vitamin B12",values=cols.vitb12) + 
+    theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
+  VitB12_food 
 
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  library(grid)
-  
-  # Make a list from the ... arguments and plotlist
-  plots <- c(list(...), plotlist)
-  
-  numPlots = length(plots)
-  
-  # If layout is NULL, then use 'cols' to determine layout
-  if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                     ncol = cols, nrow = ceiling(numPlots/cols))
-  }
-  
-  if (numPlots==1) {
-    print(plots[[1]])
-    
-  } else {
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-    
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-      
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
-}
-multiplot(energy_food,protein_food,calcium_food,folate_food,iron_food,zinc_food,VitA_food,
-          VitB12_food,cols=2)
+# multiplot(energy_food,protein_food,calcium_food,folate_food,iron_food,zinc_food,VitA_food,
+#           VitB12_food,cols=2)
 
 
 
@@ -253,60 +272,76 @@ notrade.plot$VitA_notrade <- notrade.plot$Food_VitA -
   (notrade.plot$Import.Quantity_VitA - notrade.plot$ExportQuantity_VitA)
 
 # Make no trade plots
+# Protein scale: -2,0,1,2.3,3,5,7.5,32.06
+notrade.plot$protein.cut <- cut(notrade.plot$Protein_notrade, c(-2,0,1,2,3.3,5,7.5,32.06))
+cols.nt.protein <- c("#a50026","#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 protein_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = Protein_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Protein, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = protein.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Protein, no trade",values=cols.nt.protein) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) 
 protein_notrade_plot 
 
+# Energy scale: -1.34, 0, 0.5, 1, 1.25, 1.5, 2, 3.5, 8
+notrade.plot$energy.cut <- cut(notrade.plot$Energy_notrade, c(-1.34,0,0.5,1,1.25,1.5,2,3.35,8))
+cols.nt.energy <- c("#a50026","#d73027","#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 energy_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = Energy_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Energy, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = energy.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Energy, no trade",values=cols.nt.energy) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 energy_notrade_plot 
 
+# Iron scale: -5, 0, 0.25, 0.5, 1, 1.25, 1.75, 2.3, 5.5, 14
+notrade.plot$iron.cut <- cut(notrade.plot$Iron_notrade, c(-5,0,0.25,0.5,1,1.25,1.75,2.3,5.5,14))
+cols.nt.iron <- c("#a50026","#d73027","#f46d43","#fdae61","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 iron_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = Iron_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Iron, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = iron.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Iron, no trade",values=cols.nt.iron) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) 
 iron_notrade_plot
 
+# Zinc scale: -2.3, 0, .5, 1, 1.75, 2.5, 3.5, 5.5, 22
+notrade.plot$zinc.cut <- cut(notrade.plot$Zinc_notrade, c(-2.3,0,0.5,1,1.75,2.5,3.5,5.5,22))
+cols.nt.zinc <- c("#a50026","#d73027","#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 zinc_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = Zinc_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Zinc, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = zinc.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Zinc, no trade",values=cols.nt.zinc) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) 
 zinc_notrade_plot
 
+# Calcium scale: -0.47, 0, 0.2, 0.75, 1, 2, 2.3, 2.75, 5, 33.6
+notrade.plot$calc.cut <- cut(notrade.plot$Calcium_notrade, c(-.47,0,0.2,0.75,1,2,2.3,2.75,5,33.6))
+cols.nt.calc <- c("#a50026","#d73027","#f46d43","#fdae61","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 calcium_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = Calcium_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Calcium, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = calc.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Calcium, no trade",values=cols.nt.calc) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 calcium_notrade_plot
 
+# Folate scale: -3.7, 0, 0.3, 0.5, 1, 1.25, 1.5, 2, 3.5, 15 
+notrade.plot$folate.cut <- cut(notrade.plot$Folate_notrade, c(-3.7,0,0.3,0.5,1,1.25,1.5,2,3.5,15))
+cols.nt.folate <- c("#a50026","#d73027","#f46d43","#fdae61","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 folate_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = Folate_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Folate, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = folate.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Folate, no trade",values=cols.nt.folate) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 folate_notrade_plot
 
+# Vitamin A scale: -0.6, 0, 0.43, 1, 2, 3.75, 5, 9, 26.1
+notrade.plot$vita.cut <- cut(notrade.plot$VitA_notrade, c(-.6,0,0.43,1,2,3.75,5,9,26.1))
+cols.nt.vita <- c("#a50026","#d73027","#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 VitA_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = VitA_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Vitamin A, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = vita.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Vitamin A, no trade",values=cols.nt.vita) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) 
 VitA_notrade_plot
 
+# Vitamin B12 scale: -0.9, 0, 0.5, 1, 3, 5.5, 8, 12, 91.5
+notrade.plot$vitb12.cut <- cut(notrade.plot$VitB12_notrade, c(-.91,0,0.5,1,3,5.5,8,12,91.5))
+cols.nt.vitb12 <- c("#a50026","#d73027","#f46d43","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695")
 VitB12_notrade_plot <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = group)) + 
-  geom_polygon(data = notrade.plot, aes(fill = VitB12_notrade), color="white", size=0.25) + 
-  scale_fill_gradient2(name="Vitamin B12, no trade",low="#7f0000",mid="#fff5f0",high="#006837",midpoint=1) + 
-  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm")) + 
-  guides(fill = guide_colourbar(title.position="top"))
+  geom_polygon(data = notrade.plot, aes(fill = vitb12.cut), color="white", size=0.25) + 
+  scale_fill_manual(name="Vitamin B12, no trade",values=cols.nt.vitb12) + 
+  theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 VitB12_notrade_plot
 
 ## Write figures to .pdf files to be merged into single figure in Illustrator
@@ -328,7 +363,7 @@ plotlist[[14]] <- zinc_notrade_plot
 plotlist[[15]] <- VitA_notrade_plot
 plotlist[[16]] <- VitB12_notrade_plot
 
-setwd("~/Documents/Work/Projects/Manuscripts/Unsubmitted/Nutrient Trade/Figures/Nutrients Trade No Trade")
+setwd("~/Documents/Work/Writing/Manuscripts/Unsubmitted/Nutrient Trade/Figures/Nutrients Trade No Trade")
 for(i in 1:8){
   ggsave(plot=plotlist[[i]],file=paste("file",i,".pdf",sep=""))
 }
@@ -338,7 +373,7 @@ for(i in 9:16){
 
 
 
-# FIGURE 2
+# Ex- FIGURE 2
 PNA.Food <- PNA(mapping[,c(2:9)])
 PNA.Production <- PNA(mapping[,c(20:27)])
 fig2.data <- data.frame(mapping$ISO3,PNA.Food,PNA.Production)
@@ -435,41 +470,4 @@ VitA <- ggplot(data = area.points, mapping = aes(x = long, y = lat, group = grou
   theme_bw() + ditch_the_axes + theme(legend.key.size=unit(.5,"cm"))
 VitA
 
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  library(grid)
-  
-  # Make a list from the ... arguments and plotlist
-  plots <- c(list(...), plotlist)
-  
-  numPlots = length(plots)
-  
-  # If layout is NULL, then use 'cols' to determine layout
-  if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                     ncol = cols, nrow = ceiling(numPlots/cols))
-  }
-  
-  if (numPlots==1) {
-    print(plots[[1]])
-    
-  } else {
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-    
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-      
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
-}
 multiplot(Energy, Protein, Calcium, Folate, Iron, Zinc, VitA, VitB12, cols=3)
-
-
